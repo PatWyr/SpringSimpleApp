@@ -3,13 +3,11 @@ package com.springframework.springApp.domain;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-@NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
@@ -23,6 +21,9 @@ public class Publisher {
     private String state;
     private int zip;
 
+    @OneToMany
+    @JoinColumn(name = "publisher_id")
+    private Set<Book> books = new HashSet<>();
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -36,5 +37,15 @@ public class Publisher {
     @Override
     public int hashCode() {
         return id != null ? id.hashCode() : 0;
+    }
+
+    public Publisher() {
+    }
+
+    public Publisher(String address, String city, String state, int zip) {
+        this.address = address;
+        this.city = city;
+        this.state = state;
+        this.zip = zip;
     }
 }
